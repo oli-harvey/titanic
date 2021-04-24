@@ -10,17 +10,16 @@ def process_cabin(
             .str.split(' ')
             .str[0]
             .fillna('z')
+            .str[0]
     )
     processed_df['cabin_num'] = (
         processed_df['Cabin']
-            .replace('[A-Z]', '', regex=True)
-            .str.split(' ')
-            .str[0]
+            .str.extract('(\d+)')
             .fillna(0)
+            .astype(int)
     )
     processed_df['num_of_cabins'] = (
         processed_df['Cabin']
-            .str.count(' ')
-            .fillna(0)
-    ) + 1
+            .str.count(' ') 
+    )
     return processed_df

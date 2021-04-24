@@ -18,6 +18,10 @@ def impute_cond_mean(
         suffixes=[None, '_imp']
     )
     col_with_na_new_name = col_with_na + '_imp'
+    col_with_na_flag_name = col_with_na + 'impute_flag'
+    merged_df[col_with_na_flag_name] = 0
+    merged_df.loc[merged_df[col_with_na].isna(), col_with_na_flag_name] = 1
     merged_df[col_with_na].fillna(merged_df[col_with_na_new_name], inplace=True)
+    
     merged_df.drop(columns=col_with_na_new_name, inplace=True)
     return merged_df
